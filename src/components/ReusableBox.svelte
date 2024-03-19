@@ -17,7 +17,7 @@
         padding: {padding};
         background-color: {background};
         border-radius: {cornerRadius};
-        border: 0.2em solid rgba({borderColor});
+        border: 0.12em solid rgba({borderColor});
         margin: {marginTop}px {marginRight}px {marginBottom}px {marginLeft}px
     "
 >

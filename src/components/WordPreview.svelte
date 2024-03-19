@@ -13,6 +13,6 @@
         display: flex;
     }
     img {
-        width: 40em;
+        width: 65em;
     }
 </style>

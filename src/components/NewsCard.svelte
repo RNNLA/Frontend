@@ -29,7 +29,7 @@
     }
     .content {
         display: flex;
-        width: 50em;
+        width: 32em;
         padding: 1em;
     }
 </style>

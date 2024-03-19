@@ -2,6 +2,7 @@
     export let direction :string = "column";
     export let enableCenter:Boolean = false;
     export let enableExpand:Boolean = false;
+    export let enableSpaceBetween:Boolean = false;
     export let style = {};
 	
     let clazz : String = '';
@@ -14,7 +15,7 @@
     $: styleHTML = formatToHTMLStyleFromObject(style);
 </script>
 
-<div class="{direction} {clazz} {enableCenter ? 'center':''} {enableExpand ? 'expand' : ''}" style={styleHTML}>
+<div class="{direction} {clazz} {enableCenter ? 'center':''} {enableExpand ? 'expand' : ''} {enableSpaceBetween ? 'space-between' : ''}" style={styleHTML}>
     <slot></slot>
 </div>
 
@@ -32,5 +33,8 @@
     }
     .expand {
         flex-grow: 1;
+    }
+    .space-between {
+        justify-content: space-between;
     }
 </style>

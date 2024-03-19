@@ -26,7 +26,7 @@
 		flex: 1;
 		display: flex;
 		flex-direction: column;
-		padding: 3em;
+		padding: 6em 12em 6em 12em;
 	}
 
 	footer {

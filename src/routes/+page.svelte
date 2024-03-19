@@ -4,6 +4,7 @@
     import ItemDirection from "../components/ItemDirection.svelte";
     import TodayBinarySentimentCard from "../components/TodayBinarySentimentCard.svelte";
     import WordPreview from "../components/WordPreview.svelte";
+    import WordRankingCard from "../components/WordRankingCard.svelte";
 </script>
 
 <svelte:head>
@@ -12,6 +13,7 @@
 </svelte:head>
 
 <section>
+	<div class="title">금일 긍부정 분석결과를 알려드려요. 😃</div>
 	<ReusableBox title="뉴스 목록" marginBottom={28}>
 		<ItemDirection direction="row">
 			<ItemDirection direction="column" enableExpand={true}>
@@ -38,11 +40,16 @@
 		<ReusableBox title="긍부정 키워드" marginTop={28} marginRight={28}>
 				<WordPreview></WordPreview>
 		</ReusableBox>	
-		<ReusableBox title="긍부정 단어 빈도수" marginTop={28}>
+		<ReusableBox title="긍부정 단어 빈도수" marginTop={28} enableExpand={true}>
+			<WordRankingCard></WordRankingCard>
 		</ReusableBox>
 	</ItemDirection>
 </section>
 
 <style>
-
+	.title {
+		font-size: 2em;
+		font-weight: 700;
+		margin-bottom: 1em;
+	}
 </style>
