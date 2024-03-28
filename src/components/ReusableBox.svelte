@@ -11,21 +11,23 @@
     export let enableExpand:Boolean = false;
 </script>
 
-<div
-    class="container {enableExpand? 'expand':''}"
-    style="
-        padding: {padding};
-        background-color: {background};
-        border-radius: {cornerRadius};
-        border: 0.12em solid rgba({borderColor});
-        margin: {marginTop}px {marginRight}px {marginBottom}px {marginLeft}px
-    "
->
-    {#if title}
-        <div class="title">{title}</div>
-    {/if}
-    <slot />
-</div>
+
+    <div
+        class="container {enableExpand? 'expand':''}"
+        style="
+            padding: {padding};
+            background-color: {background};
+            border-radius: {cornerRadius};
+            border: 0.12em solid rgba({borderColor});
+            margin: {marginTop}px {marginRight}px {marginBottom}px {marginLeft}px
+        "
+    >
+        {#if title}
+            <div class="title">{title}</div>
+        {/if}
+        <slot />
+    </div>
+
 
 <style>
     .container {

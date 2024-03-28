@@ -4,12 +4,15 @@
     export let isSelected:Boolean = false;
     export let marginLeft: Number = 0;
     export let marginBottom: Number = 12;
+    import SmoothCorners from '../lib/svelte-smooth-corners/src';
 </script>
 
+
 <div class="container  {isSelected ? 'selected' : ''}" style="margin-left: {marginLeft}px; margin-bottom: {marginBottom}px">
-   {#if newsTitle != ""}  <div class="title">{newsTitle}</div> {/if}
-   {#if newsContent != ""}  <div class="content">{newsContent}</div> {/if}
+    {#if newsTitle != ""}  <div class="title">{newsTitle}</div> {/if}
+    {#if newsContent != ""}  <div class="content">{newsContent}</div> {/if}
 </div>
+
 
 <style>
     .container {

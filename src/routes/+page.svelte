@@ -5,6 +5,7 @@
     import TodayBinarySentimentCard from "../components/TodayBinarySentimentCard.svelte";
     import WordPreview from "../components/WordPreview.svelte";
     import WordRankingCard from "../components/WordRankingCard.svelte";
+    import Graph from "../components/Graph.svelte";
 </script>
 
 <svelte:head>
@@ -28,7 +29,9 @@
 		</ItemDirection>
 	</ReusableBox>
 	<ItemDirection direction="row">
-		<ReusableBox title="긍부정 추이" marginRight={28}></ReusableBox>
+		<ReusableBox title="긍부정 추이" marginRight={28}>
+			<Graph></Graph>
+		</ReusableBox>
 		<ReusableBox title="금일 비율">
 			<ItemDirection direction="column">
 				<TodayBinarySentimentCard isPositive={true} percent={60} count={5000}></TodayBinarySentimentCard>
@@ -44,6 +47,7 @@
 			<WordRankingCard></WordRankingCard>
 		</ReusableBox>
 	</ItemDirection>
+	
 </section>
 
 <style>
