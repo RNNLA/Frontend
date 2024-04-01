@@ -1,54 +1,47 @@
 <script lang="ts">
     import ItemDirection from "../components/ItemDirection.svelte";
     export let isPositive:Boolean = true;
-    export let marginBottom:Number = 16;
     export let percent:Number = 0;
     export let count:Number = 0;
-    import thumbsUp from "$lib/images/thumbs-up.svg";
-    import thumbsDown from "$lib/images/thumbs-down.svg";
+    import thumbsUp from "$lib/images/thumbs-up.png";
+    import thumbsDown from "$lib/images/thumbs-down.png";
 </script>
 
 
-<ItemDirection direction="row">
+<ItemDirection direction="row" enableCenter={true}>
     {#if isPositive} 
-    <div class="positive-background" style="margin-bottom:{marginBottom}px;">
-        <img src={thumbsUp} alt="thumbs up"/>
-    </div>
+        <img src={thumbsUp} class="positive-img" alt="thumbs up"/>
     {:else}
-    <div class="negative-background">
-        <img src={thumbsDown} alt="thumbs down"/>
-    </div>
+        <img src={thumbsDown} class="negative-img" alt="thumbs down"/>
     {/if}
     <ItemDirection direction="column" enableCenter={true}>
-        <div class="text-area {isPositive? 'positive-text' : 'negative-text'}">{isPositive? '긍정' : '부정'} {percent}%</div>
-        <div class="text-area {isPositive? 'positive-text' : 'negative-text'}">{count}건</div>
+        <div class="text-area {isPositive? 'positive-text positive-text' : 'negative-text negative-text'}">{isPositive? '긍정' : '부정'} {percent}%</div>
+        <div class="text-area {isPositive? 'positive-text positive-text' : 'negative-text negative-text'}">{count}건</div>
     </ItemDirection>
 </ItemDirection>
 
 
 <style>
     .text-area {
-        margin-left: 1.25em;
-        font-size: 1.25em;
-        font-weight: 500;
+        margin-left: 1.25rem;
+        font-weight: 600;
     }
+
     .positive-text {
-        color : #4F641A;
+        font-size: 2.125rem;
     }
     .negative-text {
-        color : #D43C36;
+        font-size: 1.25rem;
     }
-    .positive-background {
-        padding: 2em;
-        background-color: rgba(152,192,57, 0.3);
-        border-radius: 50%;
+
+    .positive-img {
+        width: 15rem;
+        height: 15rem;
+        
     }
-    .negative-background {
-        padding: 2em;
-        background-color: rgba(212,60,54, 0.3);
-        border-radius: 50%;
-    }
-    img {
-        width: 2em;
+    .negative-img {
+        margin-left: 1.2rem;
+        width: 8.75rem;
+        height: 8.75rem;
     }
 </style>

@@ -1,15 +1,42 @@
-@import '@fontsource/fira-mono';
+@font-face {
+	font-family: 'SpoqaHanSansNeo';
+	src: url('/SpoqaHanSansNeo-Bold.woff2') format('woff2');
+	font-weight: 700;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: 'SpoqaHanSansNeo';
+	src: url('/SpoqaHanSansNeo-Light.woff2') format('woff2');
+	font-weight: 300;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: 'SpoqaHanSansNeo';
+	src: url('/SpoqaHanSansNeo-Medium.woff2') format('woff2');
+	font-weight: 600;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: 'SpoqaHanSansNeo';
+	src: url('/SpoqaHanSansNeo-Regular.woff2') format('woff2');
+	font-weight: 500;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: 'SpoqaHanSansNeo';
+	src: url('/SpoqaHanSansNeo-Thin.woff2') format('woff2');
+	font-weight: 400;
+	font-style: normal;
+}
 
 :root {
-	--font-body: Arial, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu,
-		Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-	--font-mono: 'Fira Mono', monospace;
+	--font-body: 'SpoqaHanSansNeo';
 	--color-bg: #F1F2F4;
-	--color-theme-1: #ff3e00;
-	--color-theme-2: #4075a6;
-	--color-text: rgba(0, 0, 0, 0.7);
-	--column-width: 42rem;
-	--column-margin-top: 4rem;
+	--color-text: #33363F;
 	font-family: var(--font-body);
 	color: var(--color-text);
 }
@@ -97,4 +124,32 @@ button:focus:not(:focus-visible) {
 	position: absolute;
 	width: 1px;
 	white-space: nowrap;
+}
+
+.highlight-color {
+	color: #5447E5;
+}
+
+.highlight-background-color {
+	background-color: #5447E5;
+}
+
+.highlight-selected-background-color {
+	background-color: rgba(84, 71, 229, 0.2);
+}
+
+.good-color {
+	color: #98C039;
+}
+
+.bad-color {
+	color: #D43C36;
+}
+
+.positive-text {
+	color: #4F641A;
+}
+
+.negative-text {
+	color: #D43C36;
 }

@@ -30,6 +30,7 @@
     }
     .center {
         justify-content: center;
+        align-items: center;
     }
     .expand {
         flex-grow: 1;
