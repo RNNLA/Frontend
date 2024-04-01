@@ -29,10 +29,10 @@
         </thead>
         <tbody>
             {#each rankPartModels as model}
-                <tr>
+                <tr>    
                     <td class="number">{model.rank}</td>
                     <td class="word">{model.word}</td>
-                    <td class="sentiment">{model.sentiment}</td>
+                    <td class="sentiment {model.sentiment == '긍정' ? 'good-color':'bad-color'}">{model.sentiment}</td>
                     <td class="number">{model.count}</td>
                 </tr>
             {/each}
@@ -47,17 +47,17 @@
     }
     tr {
         text-align: center;
-
+        font-size: 2.25rem;
     }
     th, td {
-
+        font-size: 2rem;
         padding: 0.5em;
-        /* text-align: left; */
+        font-weight: 500;
     }
     .table-header {
         padding-top: 0.5em; padding-bottom: 0.5em;
-        border-top: 0.08em solid; border-bottom: 0.05em solid;
-        color: rgba(0,0,0,.4);
+        border-top: rgba(51,54,63,.24) 0.063rem solid; border-bottom:rgba(51,54,63,.1) 0.063rem solid;
+        color: rgba(51,54,63,.4);
     }
 
     .number {
@@ -71,8 +71,8 @@
     }
 
     .flex-container {
-         display: flex;
-         flex-direction: row;
+        display: flex;
+        flex-direction: row;
         width: 100%; /* flex-container의 가로길이 */
     }
 </style>

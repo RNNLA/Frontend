@@ -11,7 +11,7 @@
 	</main>
 
 	<footer>
-		<p>visit <a href="https://kit.svelte.dev">kit.svelte.dev</a> to learn SvelteKit</p>
+		<p>Developed by <a href="RNNLA.github.io" target="_blank">RNNLA</a> Team</p>
 	</footer>
 </div>
 
@@ -26,7 +26,7 @@
 		flex: 1;
 		display: flex;
 		flex-direction: column;
-		padding: 6em 12em 6em 12em;
+		padding: 6em 7.625rem 6em 7.625rem;
 	}
 
 	footer {
