@@ -1,13 +1,15 @@
 <script>
 	import { page } from "$app/stores";
 	import github from "$lib/images/github.svg";
+	
+	import ItemDirection from "./ItemDirection.svelte";
 
 	let isMouseOver = false;
+	let isMouseClick = false;
 
 	function handleMouseOver() {
 		isMouseOver = true;
 	}
-
 	function handleMouseOut() {
 		isMouseOver = false;
 	}
@@ -18,9 +20,16 @@
 		<a href="/">RNNLA DASHBOARD</a>
 	</div>
 	<div class="menu">
-		<a href="/" aria-current={$page.url.pathname === '/' ? 'page' : undefined}>분석</a>
+		<ItemDirection direction="column" enableCenter={true}>
+			<a href="/" aria-current={$page.url.pathname === '/' ? 'page' : undefined}>분석</a>
+			<div class={$page.url.pathname === '/' ? 'menu_cur' : 'menu_not_cur'}></div>
+		</ItemDirection>
 		<div class="menu_divider"></div>
-		<a href="/verification" aria-current={$page.url.pathname === '/verification' ? 'page' : undefined}>검증</a>
+		<ItemDirection direction="column" enableCenter={true}>
+			<a href="/verification" aria-current={$page.url.pathname === '/verification' ? 'page' : undefined}>검증</a>
+			<div class="{$page.url.pathname === '/verification' ? 'menu_cur' : 'menu_not_cur'}"></div>
+		</ItemDirection>
+		
 	</div>
 	<div class="right_corner">
 		<a href="https://github.com/RNNLA">
@@ -48,6 +57,11 @@
 
 	} 
 
+	header a:hover{
+		background-color: rgba(208, 213, 215, 0.616);
+		border-radius: 4px;
+	}
+
 	header img {
 		width: 2em;
 		height: 2em;
@@ -70,24 +84,38 @@
 
 	.menu{
 		margin-left: 2em;
-		height: 1.2em;
 		display: flex;
 		flex-direction: row;
-		justify-content: center;
-		align-items: center;
+		align-items: center; 
+
 	}
 
 	.menu a{
+		padding:0.2em;
 		margin-left: 0.5em;
 		margin-right: 0.5em;
 		display: flex;
+		flex:auto;
 		text-align: center;
+		flex: 1 0 auto;
 	}
 
 	.menu_divider{
 		border-left: 2px solid #ffffff;
-		height: 130%;
-		
+		height: 1.2em;
+	}
+
+	.menu_cur{
+		height: 0.32em;
+		width: 0.32em;
+		margin-top : 0.1em;
+		background-color: white;
+		border-radius: 50%;
+		display: inline-block;
+	}
+
+	.menu_not_cur{
+		display: none;
 	}
 
 
