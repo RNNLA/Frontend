@@ -1,4 +1,7 @@
 <script lang="ts">
+    import ItemDirection from "./ItemDirection.svelte";
+
+    export let titleIcon:string = "";
     export let title:String = "";
     export let padding:String = "1.8em"; // 기본 padding 값
     export let background:String = "white"; // 기본 배경색
@@ -12,22 +15,29 @@
 </script>
 
 
-    <div
-        class="container {enableExpand? 'expand':''}"
-        style="
-            padding: {padding};
-            background-color: {background};
-            border-radius: {cornerRadius};
-            border: 0.12em solid rgba({borderColor});
-            margin: {marginTop}px {marginRight}px {marginBottom}px {marginLeft}px
-        "
-    >
-        {#if title}
-            <div class="title">{title}</div>
+<div
+    class="container {enableExpand? 'expand':''}"
+    style="
+        padding: {padding};
+        background-color: {background};
+        border-radius: {cornerRadius};
+        border: 0.12em solid rgba({borderColor});
+        margin: {marginTop}px {marginRight}px {marginBottom}px {marginLeft}px
+    "
+>
+    {#if title}
+        {#if titleIcon} 
+            <ItemDirection direction="row">
+                <img src={titleIcon} alt="title icon">
+                <div class="title">{@html title}</div>
+            </ItemDirection>
+        {:else}
+            <div class="title">{@html title}</div>
         {/if}
-        <slot />
-    </div>
-
+    {/if}
+    <div class="content"><slot /></div>
+    
+</div>
 
 <style>
     .container {
@@ -36,11 +46,17 @@
         flex-direction: column;
     }
     .title {
-        font-size: 1.2em;
+        font-size: 2.25rem;
         font-weight: 700;
         padding-bottom: 0.8em;
     }
     .expand {
         flex-grow: 1;
     }
+
+    img {
+        width: 2.8rem;
+        height: 2.8rem;
+    }
+
 </style>
