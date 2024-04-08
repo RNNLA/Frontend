@@ -1,6 +1,7 @@
 <script>
 	import { page } from "$app/stores";
 	import github from "$lib/images/github.svg";
+    import { fade } from "svelte/transition";
 	
 	import ItemDirection from "./ItemDirection.svelte";
 
@@ -22,12 +23,16 @@
 	<div class="menu">
 		<ItemDirection direction="column" enableCenter={true}>
 			<a href="/" aria-current={$page.url.pathname === '/' ? 'page' : undefined}>분석</a>
-			<div class={$page.url.pathname === '/' ? 'menu_cur' : 'menu_not_cur'}></div>
+			{#if $page.url.pathname === '/'}
+				<div class="menu_cur" in:fade></div>
+			{/if}
 		</ItemDirection>
 		<div class="menu_divider"></div>
 		<ItemDirection direction="column" enableCenter={true}>
 			<a href="/verification" aria-current={$page.url.pathname === '/verification' ? 'page' : undefined}>검증</a>
-			<div class="{$page.url.pathname === '/verification' ? 'menu_cur' : 'menu_not_cur'}"></div>
+			{#if $page.url.pathname === '/verification'}
+				<div class="menu_cur" in:fade></div>
+			{/if}
 		</ItemDirection>
 		
 	</div>
