@@ -35,8 +35,8 @@
 	<title>RNNLA DASHBOARD</title>
 	<meta name="description" content="RNNLA Dashboard App" />
 </svelte:head>
-
-<section>
+<div class="container">
+<ItemDirection>
 	<Title></Title>
 	<ItemDirection direction="row">
 			<ReusableBox 
@@ -59,7 +59,7 @@
 	<ItemDirection direction="row">
 		<ReusableBox title='날짜별 긍·부정 <span class="highlight-color">비율</span>을 확인해보세요!' marginTop={28} enableExpand={true}>
 		</ReusableBox>
-		<ReusableBox title="긍부정 단어뷰	" marginTop={28} marginLeft={28}>
+		<ReusableBox title="긍부정 단어뷰" marginTop={28} marginLeft={28}>
 			<WordPreview></WordPreview>
 		</ReusableBox>	
 	</ItemDirection>
@@ -73,10 +73,11 @@
 			<NewsCard marginLeft={16} marginBottom={0}></NewsCard>
 		</ItemDirection>
 	</ReusableBox>
-	
-	
-</section>
+</ItemDirection>
+</div>
 
 <style>
-	
+	.container {
+		padding: 6em 7.625rem 6em 7.625rem;
+	}
 </style>
