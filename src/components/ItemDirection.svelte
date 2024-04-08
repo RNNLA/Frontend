@@ -3,6 +3,7 @@
     export let enableCenter:Boolean = false;
     export let enableExpand:Boolean = false;
     export let enableSpaceBetween:Boolean = false;
+    export let enableMax:Boolean = false;
     export let style = {};
 	
     let clazz : String = '';
@@ -15,7 +16,7 @@
     $: styleHTML = formatToHTMLStyleFromObject(style);
 </script>
 
-<div class="{direction} {clazz} {enableCenter ? 'center':''} {enableExpand ? 'expand' : ''} {enableSpaceBetween ? 'space-between' : ''}" style={styleHTML}>
+<div class="{direction} {clazz} {enableCenter ? 'center':''} {enableExpand ? 'expand' : ''} {enableSpaceBetween ? 'space-between' : ''} {enableMax ? 'max' : ''}" style={styleHTML}>
     <slot></slot>
 </div>
 
@@ -23,6 +24,10 @@
     .column {
         display: flex;
         flex-direction: column;
+    }
+    .max {
+        height: 100vh;
+        width: 100%;
     }
     .row {
         display: flex;

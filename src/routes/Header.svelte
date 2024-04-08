@@ -21,6 +21,7 @@
 		display: flex;
 		justify-content: space-between;
 		background-color: #33363f;
+		height: 10%;
 	}
 
 	.corner {

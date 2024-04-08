@@ -37,6 +37,11 @@
 	--font-body: 'SpoqaHanSansNeo';
 	--color-bg: #F1F2F4;
 	--color-text: #33363F;
+	--highlight-color: #5447E5;
+	--positive-color: rgb(152, 192, 57);
+	--negative-color: rgb(212, 60, 54);
+	--positive-color-opa: rgba(152, 192, 57, .2);
+	--negative-color-opa: rgba(212, 60, 54, .2);
 	font-family: var(--font-body);
 	color: var(--color-text);
 }
@@ -98,10 +103,9 @@ pre {
 	margin: 0 auto;
 }
 
-input,
 button {
-	font-size: inherit;
-	font-family: inherit;
+	font-family: var(--font-body);
+	color: var(--color-text);
 }
 
 button:focus:not(:focus-visible) {

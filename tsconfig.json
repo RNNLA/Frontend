@@ -14,7 +14,8 @@
 	"include": [
 		"src/**/*.d.ts",
 		"src/**/*.js",
-		"src/**/*.svelte"
+		"src/**/*.svelte",
+		"src/routes/verification/models.ㅓㄴ"
 	]
 	// Path aliases are handled by https://kit.svelte.dev/docs/configuration#alias
 	//
