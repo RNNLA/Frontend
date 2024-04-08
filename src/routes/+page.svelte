@@ -8,9 +8,9 @@
     import WordRankingCard from "../components/WordRankingCard.svelte";
     import Title from "../components/Title.svelte";
     import Spacer from "../components/Spacer.svelte";
+	import Graph from "../components/Graph.svelte";
 	import NewsPin from "$lib/images/news-pin.png";
-
-
+	
 	interface NewsDataModel {
         title: string;
 		link: string;
@@ -58,6 +58,7 @@
 	</ItemDirection>
 	<ItemDirection direction="row">
 		<ReusableBox title='날짜별 긍·부정 <span class="highlight-color">비율</span>을 확인해보세요!' marginTop={28} enableExpand={true}>
+			<Graph svg_width=600 svg_height=400></Graph>
 		</ReusableBox>
 		<ReusableBox title="긍부정 단어뷰	" marginTop={28} marginLeft={28}>
 			<WordPreview></WordPreview>
