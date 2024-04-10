@@ -52,18 +52,16 @@
 				</ItemDirection>
 			</ReusableBox>
 
-		<ReusableBox title="긍·부정 단어 리스트" marginTop={48} marginLeft={28}>
+		<ReusableBox title="긍·부정 단어 리스트" marginTop={48}>
 			<WordRankingCard></WordRankingCard>
 		</ReusableBox>
 	</ItemDirection>
-	<ItemDirection direction="row">
-		<ReusableBox title='날짜별 긍·부정 <span class="highlight-color">비율</span>을 확인해보세요!' marginTop={28} enableExpand={true}>
-			<Graph svg_width=600 svg_height=400></Graph>
-		</ReusableBox>
-		<ReusableBox title="긍부정 단어뷰" marginTop={28} marginLeft={28}>
-			<WordPreview></WordPreview>
-		</ReusableBox>	
-	</ItemDirection>
+	<ReusableBox title='날짜별 긍·부정 <span class="highlight-color">비율</span>을 확인해보세요!' marginTop={28} enableExpand={true}>
+		<Graph></Graph>
+	</ReusableBox>
+	<ReusableBox title="긍부정 단어뷰" marginTop={28}>
+		<WordPreview></WordPreview>
+	</ReusableBox>	
 	<ReusableBox title='금일 <span class="highlight-color">반도체 시황</span> 뉴스들도 확인해보세요!' marginTop={48} marginBottom={28} titleIcon={NewsPin}>
 		<ItemDirection direction="row">
 			<ItemDirection direction="column" enableExpand={true}>
