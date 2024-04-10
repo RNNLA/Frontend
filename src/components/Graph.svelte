@@ -32,10 +32,10 @@
       // {date: '24-03-26',positive: 80, negative: 20},
     ];
 
-    let svg_width:number = 400;
-    let svg_height:number = 300;
+    let svg_width:number = 1;
+    let svg_height:number = 1;
     
-    const margin = { top: 10, right: 30, bottom: 70, left: 40 };
+    const margin = { top: 10, right: 100, bottom: 75, left: 40 };
 
     function createChart(){
         const colors = ["#98C039", "#D43C36"];
@@ -71,8 +71,8 @@
             .attr("font-size", "1.25rem")
             .attr("color", "var(--highlight-color)")
             .attr("transform", "rotate(-45)")
-            .attr("dy", "1.5em")
-            .attr("dx", "1em")
+            .attr("dy", "1.2em")
+            .attr("dx", "0.6em")
         
         // y axis
         chart.append('g')
@@ -99,10 +99,46 @@
                           .attr('y', d => y(d[1]))
                           .attr('x', d => x(d.data.date))
                           .attr('width', x.bandwidth())
-                          .attr('height', d => y(d[0]) - y(d[1]))
+                          .attr('height', d => {
+                            return y(d[0]) - y(d[1]);
+                          })
                           .classed("bar", true)
                           .on("mouseover", onMouseOver)
                           .on("mouseout", onMouseOut);
+        
+        const legend_width_control_var = 10;
+        const legend_width_rect_text_interval = 20;
+        const legend_height_control_var = 20;
+        const legend_height_rect_text_interval = 15;
+        const legend_height_positive_negative_interval = 25;
+        
+        const legend_positive_box = chart.append('rect')
+                                      .attr("width", "1rem")
+                                      .attr("height", "1rem")
+                                      .attr("x", width + legend_width_control_var)
+                                      .attr("y", height/2 - legend_height_control_var)
+                                      .style("fill", "var(--negative-color)")
+                                      
+        const legend_positive_text = chart.append('text')
+                                          .text("부정 기사")
+                                          .attr("x", width + legend_width_control_var + legend_width_rect_text_interval)
+                                          .attr("y", height/2 - legend_height_control_var + legend_height_rect_text_interval)
+                                          .attr("font-weight", "500")
+                                          .style("fill", "var(--negative-color)")
+
+        const legend_negative_box = chart.append('rect')
+                                        .attr("width", "1rem")
+                                        .attr("height", "1rem")
+                                        .attr("x", width + legend_width_control_var)
+                                        .attr("y", height/2 - legend_height_control_var + legend_height_positive_negative_interval)
+                                        .style("fill", "var(--positive-color)")
+                                      
+        const legend_negative_text = chart.append('text')
+                                          .text("긍정 기사")
+                                          .attr("x", width + legend_width_control_var + legend_width_rect_text_interval)
+                                          .attr("y", height/2 - legend_height_control_var + legend_height_rect_text_interval + legend_height_positive_negative_interval)
+                                          .attr("font-weight", "500")
+                                          .style("fill", "var(--positive-color)")
 
         function onMouseOver(event, d){
           const self = event.target;
@@ -138,7 +174,7 @@
             
             text.append("text")
                 .attr("x",() => x(d3.select(self).datum().data.date) - x.bandwidth()/2+20+popup_box_manual_x)
-                .attr("y",() => y(d3.select(self).datum()[1]) + (y(d3.select(self).datum()[0]) - y(d3.select(self).datum()[1]))/3+25)
+                .attr("y",() => y(d3.select(self).datum()[1]) + (y(d3.select(self).datum()[0]) - y(d3.select(self).datum()[1]))/3+50)
                 .attr("id", "popup_box")
                 .text("긍정 기사 : ")
                 .attr("font-weight", "500")
@@ -155,7 +191,7 @@
                 
                 text.append("text")
                 .attr("x",() => x(d3.select(self).datum().data.date) - x.bandwidth()/2+20+popup_box_manual_x)
-                .attr("y",() => y(d3.select(self).datum()[1]) + (y(d3.select(self).datum()[0]) - y(d3.select(self).datum()[1]))/3+50)
+                .attr("y",() => y(d3.select(self).datum()[1]) + (y(d3.select(self).datum()[0]) - y(d3.select(self).datum()[1]))/3+25)
                 .attr("id", "popup_box")
                 .classed("popup_negative_text", true)
                 .text("부정 기사 : ")
@@ -171,7 +207,6 @@
                 for (let index = 0; index < rects_one.length; index++) {
                   const element = rects_one[index];
                   if ((rects_one.length - (index)) <= 3 && element === self) {
-                    console.log(self.getAttribute("x"));
                     d3.selectAll('.popup_rect')
                       .attr("x", `${self.getAttribute("x") - popup_box_manual_x_for_last - 20}`);
                     d3.selectAll('.popup_positive_text')
@@ -185,7 +220,6 @@
                 for (let index = 0; index < rects_two.length; index++) {
                   const element = rects_two[index];
                   if ((rects_two.length - (index)) <= 3 && element === self) {
-                    console.log(self.getAttribute("x"));
                     d3.selectAll('.popup_rect')
                       .attr("x", `${self.getAttribute("x") - popup_box_manual_x_for_last - 20}`);
                     d3.selectAll('.popup_positive_text')
@@ -213,12 +247,11 @@
       }
 
 
-    afterUpdate(()=>{
-        // set the dimensions and margins of the graph
-        
+    afterUpdate(()=>{   
+
       const chartDiv = document.querySelector('#chart');
-      svg_width = chartDiv?.parentElement?.clientWidth??svg_width - margin.left - margin.right;
-      svg_height = chartDiv?.parentElement?.clientHeight??svg_height - margin.top - margin.bottom;
+      svg_width = chartDiv?.parentElement?.clientWidth??svg_width;
+      svg_height = chartDiv?.parentElement?.clientHeight??svg_height;
       
       chartDiv?.firstElementChild?.setAttribute("width", svg_width.toString());
 		  chartDiv?.firstElementChild?.setAttribute("height", svg_height.toString());
@@ -227,14 +260,20 @@
         .remove()
 
       createChart();
-      console.log(chartDiv?.firstElementChild);
+
+
+
+      
   });
 
     
 
 
     onMount(() => {
-      createChart();
+      d3.select("#chart")
+        .append('svg')
+        .attr("width", svg_width)
+        .attr("height", svg_height)
     });
 </script>
   
