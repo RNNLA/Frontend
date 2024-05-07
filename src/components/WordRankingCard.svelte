@@ -47,7 +47,7 @@
     }
     tr {
         text-align: center;
-        font-size: 2.25rem;
+        font-size: 2rem;
     }
     th, td {
         font-size: 2rem;

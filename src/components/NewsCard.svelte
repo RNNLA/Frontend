@@ -4,7 +4,7 @@
     export let newsTitle:string = "";
     export let newsLink:string = "";
     export let marginLeft: Number = 0;
-    export let marginBottom: Number = 12;
+    export let marginBottom: Number = 6;
 
     let isMouseOver = false;
     function handleMouseOver() {
@@ -53,13 +53,13 @@
         /* overflow: hidden; 내부 요소가 border-radius와 일치하도록 오버플로우를 숨깁니다. */
         display: flex;
         flex-direction: column;
-        padding: 1em;
+        padding: 0.5em;
     }
     .selected {
         border-radius: 18px;
     }
     .title {
-        font-size: 2em;
+        font-size: 1.625em;
         font-weight: 500;
     }
     .title p {

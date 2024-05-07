@@ -46,9 +46,9 @@
         flex-direction: column;
     }
     .title {
-        font-size: 2.25rem;
+        font-size: 2rem;
         font-weight: 700;
-        padding-bottom: 0.8em;
+        padding-bottom: 0.5em;
     }
     .expand {
         flex-grow: 1;

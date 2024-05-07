@@ -10,18 +10,19 @@ type VerificationNewsDataModel = {
     is_not_risk_by_human: boolean;
 }
 
-type WordDataModel = {
+type GraphDataModel = {
     date: string;
     is_not_risk: boolean;
+    count: number;
 }
 
 type WordCloudDataModel = {
-    date: string;
     word: string;
     is_not_risk: boolean;
+    count: number;
 }
 
 
 export let verificationNewsDataModels = writable<VerificationNewsDataModel[]>([]);
-export let wordDataModels = writable<WordDataModel[]>([]);
+export let graphDataModels = writable<GraphDataModel[]>([]);
 export let wordCloudDataModels = writable<WordCloudDataModel[]>([]);

@@ -15,19 +15,18 @@
         title: string;
 		link: string;
     }
-	let newsDataModels: NewsDataModel[] = JSON.parse(`
-        [
-            { "title": "반도체 겨울 지났다…삼성전자 1분기 매출 '70조 복귀' 유력", "link": "https://n.news.naver.com/mnews/article/015/0004967080?sid=101" },
-            { "title": "반도체 겨울 지났다…삼성전자 1분기 매출 '70조 복귀' 유력", "link": "https://n.news.naver.com/mnews/article/015/0004967080?sid=101" },
-            { "title": "반도체 겨울 지났다…삼성전자 1분기 매출 '70조 복귀' 유력", "link": "https://n.news.naver.com/mnews/article/015/0004967080?sid=101" },
-            { "title": "반도체 겨울 지났다…삼성전자 1분기 매출 '70조 복귀' 유력", "link": "https://n.news.naver.com/mnews/article/015/0004967080?sid=101" }
-        ]
-    `);
+	let newsDataModels: NewsDataModel[] = [];
 
 	onMount(async () => {
 		//추후 반영
 		// const res = await fetch('newsData.json');
 		// newsData = await res.json();
+		fetch('./data/test.json')
+		.then(response => response.json())
+		.then(data => {
+			newsDataModels = data;
+		})
+		.catch(error => console.error('Error fetching JSON:', error));
 	});
 </script>
 
@@ -41,7 +40,8 @@
 	<ItemDirection direction="row">
 			<ReusableBox 
 				title='금일 <span class="highlight-color">반도체 시황</span> 기사에선 <span class="good-color">긍정</span> 기사가 많아요!'
-				marginTop={48}
+				marginTop={30}
+				marginRight={10}
 				enableExpand={true}
 				>
 				<Spacer height={2}></Spacer>
@@ -52,17 +52,20 @@
 				</ItemDirection>
 			</ReusableBox>
 
-		<ReusableBox title="긍·부정 단어 리스트" marginTop={48}>
+		<ReusableBox title="긍·부정 단어 리스트" marginTop={30}>
 			<WordRankingCard></WordRankingCard>
 		</ReusableBox>
 	</ItemDirection>
-	<ReusableBox title='날짜별 긍·부정 <span class="highlight-color">비율</span>을 확인해보세요!' marginTop={28} enableExpand={true}>
-		<Graph></Graph>
-	</ReusableBox>
-	<ReusableBox title="긍부정 단어뷰" marginTop={28}>
-		<WordPreview></WordPreview>
-	</ReusableBox>	
-	<ReusableBox title='금일 <span class="highlight-color">반도체 시황</span> 뉴스들도 확인해보세요!' marginTop={48} marginBottom={28} titleIcon={NewsPin}>
+	<ItemDirection direction="row">
+		<ReusableBox title='날짜별 긍·부정 <span class="highlight-color">비율</span>을 확인해보세요!' marginTop={20} marginRight={10} enableExpand={true}>
+			<Graph></Graph>
+		</ReusableBox>
+		<ReusableBox title="긍부정 단어뷰" marginTop={20}>
+			<WordPreview></WordPreview>
+		</ReusableBox>	
+	</ItemDirection>
+	
+	<ReusableBox title='금일 <span class="highlight-color">반도체 시황</span> 뉴스들도 확인해보세요!' marginTop={20} marginBottom={28} titleIcon={NewsPin}>
 		<ItemDirection direction="row">
 			<ItemDirection direction="column" enableExpand={true}>
 				{#each newsDataModels as news}
@@ -77,6 +80,6 @@
 
 <style>
 	.container {
-		padding: 6em 7.625rem 6em 7.625rem;
+		padding: 3rem 4rem 6rem 4rem;
 	}
 </style>
