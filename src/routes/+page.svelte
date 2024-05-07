@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
+	import { onMount, afterUpdate, tick } from 'svelte';
 	import ReusableBox from "../components/ReusableBox.svelte";
 	import NewsCard from "../components/NewsCard.svelte";
     import ItemDirection from "../components/ItemDirection.svelte";
@@ -29,6 +29,22 @@
 		})
 		.catch(error => console.error('Error fetching JSON:', error));
 	});
+
+	afterUpdate( async () => {
+		await tick();
+		let scrollSize: number = 30;
+		let newsCardItems = document.querySelectorAll("#vs-newscards > div > div.virtual-scroll-wrapper > div.virtual-scroll-item");
+		const margin = window.getComputedStyle(newsCardItems[0].children[0].children[0]).getPropertyValue("margin-bottom");
+		const elemLength = newsCardItems.length >= 5 ? 5 : newsCardItems.length;
+		const elemHeight = newsCardItems[0].scrollHeight;
+		scrollSize = elemLength * (elemHeight+parseInt(margin.replaceAll("px", "")));
+
+		document.querySelector("#vs-newscards")?.setAttribute("style", `height: ${scrollSize.toString()}px`);
+		
+		// const height = newsCardItems[0].getAttribute("height");
+		
+	})
+	
 </script>
 
 <svelte:head>
@@ -67,7 +83,7 @@
 	</ItemDirection>
 	
 	<ReusableBox title='금일 <span class="highlight-color">반도체 시황</span> 뉴스들도 확인해보세요!' marginTop={20} marginBottom={28} titleIcon={NewsPin}>
-		<div class="vs">
+		<div id="vs-newscards">
 			<VirtualScroll
 					bind:this={list}
 					data={newsDataModels}
@@ -85,7 +101,7 @@
 	.container {
 		padding: 3rem 4rem 6rem 4rem;
 	}
-	.vs {
+	#vs {
 		height: 30rem;
 	}
 </style>

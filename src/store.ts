@@ -17,6 +17,7 @@ type GraphDataModel = {
 }
 
 type WordCloudDataModel = {
+    rank: number;
     word: string;
     is_not_risk: boolean;
     count: number;
