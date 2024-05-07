@@ -10,13 +10,14 @@
     import Spacer from "../components/Spacer.svelte";
 	import Graph from "../components/Graph.svelte";
 	import NewsPin from "$lib/images/news-pin.png";
+	import VirtualScroll from "svelte-virtual-scroll-list"
 	
 	interface NewsDataModel {
         title: string;
 		link: string;
     }
 	let newsDataModels: NewsDataModel[] = [];
-
+	let list;
 	onMount(async () => {
 		//추후 반영
 		// const res = await fetch('newsData.json');
@@ -66,14 +67,16 @@
 	</ItemDirection>
 	
 	<ReusableBox title='금일 <span class="highlight-color">반도체 시황</span> 뉴스들도 확인해보세요!' marginTop={20} marginBottom={28} titleIcon={NewsPin}>
-		<ItemDirection direction="row">
-			<ItemDirection direction="column" enableExpand={true}>
-				{#each newsDataModels as news}
-					<NewsCard newsTitle={news.title} newsLink={news.link}></NewsCard>
-				{/each}
-			</ItemDirection>
-			<NewsCard marginLeft={16} marginBottom={0}></NewsCard>
-		</ItemDirection>
+		<div class="vs">
+			<VirtualScroll
+					bind:this={list}
+					data={newsDataModels}
+					key="id"
+					let:data
+			>
+			<NewsCard newsTitle={data.title} newsLink={data.link}></NewsCard>
+			</VirtualScroll>
+		</div>
 	</ReusableBox>
 </ItemDirection>
 </div>
@@ -81,5 +84,8 @@
 <style>
 	.container {
 		padding: 3rem 4rem 6rem 4rem;
+	}
+	.vs {
+		height: 30rem;
 	}
 </style>
