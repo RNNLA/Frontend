@@ -6,17 +6,17 @@
     // 예시 데이터
     let data = [
       {date: '24-03-20',positive: 40, negative: 60, positive_data: 100, negative_data: 200},
-      {date: '24-03-21',positive: 30, negative: 70, positive_data: 100, negative_data: 200},
+      {date: '24-03-21',positive: 30, negative: 80, positive_data: 100, negative_data: 200},
       {date: '24-03-22',positive: 50, negative: 50, positive_data: 100, negative_data: 200},
       {date: '24-03-23',positive: 20, negative: 80, positive_data: 100, negative_data: 200},
-      {date: '24-03-24',positive: 60, negative: 40, positive_data: 100, negative_data: 200},
+      {date: '24-03-24',positive: 20, negative: 60, positive_data: 100, negative_data: 200},
       {date: '24-03-25',positive: 70, negative: 30, positive_data: 100, negative_data: 200},
-      {date: '24-03-26',positive: 80, negative: 20, positive_data: 100, negative_data: 200},
+      {date: '24-03-26',positive: 40, negative: 20, positive_data: 100, negative_data: 200},
       {date: '24-03-27',positive: 80, negative: 20, positive_data: 100, negative_data: 200},
-      {date: '24-03-28',positive: 80, negative: 20, positive_data: 100, negative_data: 200},
+      {date: '24-03-28',positive: 60, negative: 40, positive_data: 100, negative_data: 200},
       {date: '24-03-29',positive: 80, negative: 20, positive_data: 100, negative_data: 200},
-      {date: '24-03-30',positive: 80, negative: 20, positive_data: 100, negative_data: 200},
-      {date: '24-03-31',positive: 80, negative: 20, positive_data: 100, negative_data: 200},
+      {date: '24-03-30',positive: 40, negative: 50, positive_data: 100, negative_data: 200},
+      {date: '24-03-31',positive: 45, negative: 20, positive_data: 100, negative_data: 200},
       {date: '24-04-01',positive: 80, negative: 20, positive_data: 100, negative_data: 200},
       {date: '24-04-02',positive: 80, negative: 20, positive_data: 100, negative_data: 200},
       {date: '24-04-03',positive: 80, negative: 20, positive_data: 100, negative_data: 200},
@@ -24,69 +24,70 @@
       {date: '24-04-05',positive: 80, negative: 20, positive_data: 100, negative_data: 200},
       {date: '24-04-06',positive: 80, negative: 20, positive_data: 100, negative_data: 200},
       {date: '24-04-07',positive: 80, negative: 20, positive_data: 100, negative_data: 200},
-      // {date: '24-03-26',positive: 80, negative: 20},
-      // {date: '24-03-26',positive: 80, negative: 20},
-      // {date: '24-03-26',positive: 80, negative: 20},
-      // {date: '24-03-26',positive: 80, negative: 20},
-      // {date: '24-03-26',positive: 80, negative: 20},
-      // {date: '24-03-26',positive: 80, negative: 20},
+      {date: '24-04-08',positive: 80, negative: 20, positive_data: 100, negative_data: 200},
     ];
 
-    let svg_width:number = 1;
-    let svg_height:number = 1;
+    let svg_width:number = 700;
+    let svg_height:number = 350;
+
+    const legend_height:number = 50;
+    const margin = { top: 10, right: 50, bottom: 75+legend_height, left: 60 };
+
+    let width:number = svg_width - margin.left - margin.right;
+    let height:number = svg_height - margin.top - margin.bottom;
+
+    const colors = ["var(--positive-color)", "var(--negative-color)"];
+
     
-    const margin = { top: 10, right: 100, bottom: 75, left: 40 };
 
-    function createChart(){
-        const colors = ["#98C039", "#D43C36"];
-        const width:number = svg_width - margin.left - margin.right;
-        const height:number = svg_height - margin.top - margin.bottom;
+    onMount(() => {
+      let svg = d3.select("#chart")
+                .append("div")
+                .classed("container", true)
+                .append("svg")
+                .attr("viewBox", `0 0 700 380`)
+                .attr("preserveAspectRatio", "xMinYMin meet")
+                .classed("svg-content",true)
 
-        const svg = d3.select('#chart')
-                    .append('svg')
-                    .attr('width', svg_width)
-                    .attr('hieght', svg_height)
-                    .attr('viewBox', `0 0 ${svg_width} ${svg_height}`)
+      let chart = d3.select(".svg-content")
+                    .append("g")
+                    .attr("transform", `translate(${margin.left},${margin.top})`)
+                    .classed("chart", true)
+        
+      const x = d3.scaleBand().range([0, width]).domain(data.map(d => d.date)).padding(0.2);
+      const y = d3.scaleLinear().range([height, 0]).domain([0, 100]);
 
-        const chart = svg.append('g')
-                    .attr('transform', `translate(${margin.left},${margin.top})`)
-                    .classed("chart_content", true);
+      const keys = ['positive', 'negative'];
+      const stacked_data = d3.stack().keys(keys)(data);
 
-        const x = d3.scaleBand().range([0, width]).domain(data.map(d => d.date)).padding(0.2);
-        const y = d3.scaleLinear().range([height, 0]).domain([0, 100]);
+      // x axis
+      chart.append('g')
+          .attr('transform', `translate(0,${height})`)
+          .call(d3.axisBottom(x))
+          .classed('x_axis', true);
 
-        const keys = ['positive', 'negative'];
-        const stacked_data = d3.stack().keys(keys)(data);
+      chart.select('.x_axis')
+          .attr("text-anchor", "end")
+          .selectAll("text")
+          .attr("font-weight", "500")
+          .attr("font-size", "1.25rem")
+          .attr("color", "var(--highlight-color)")
+          .attr("transform", "rotate(-65)")
+          .attr("dy", "0.3em")
+          .attr("dx", "-0.5em")
+      
+      // y axis
+      chart.append('g')
+          .call(d3.axisLeft(y).tickFormat((d)=>d+"%"))
+          .classed('y_axis', true);
 
-        // x axis
-        chart.append('g')
-            .attr('transform', `translate(0,${height})`)
-            .call(d3.axisBottom(x))
-            .classed('x_axis', true);
-
-        chart.select('.x_axis')
-            .attr("text-anchor", "end")
-            .selectAll("text")
-            .attr("font-weight", "500")
+      chart.select('.y_axis')
+            .selectAll('text')
             .attr("font-size", "1.25rem")
             .attr("color", "var(--highlight-color)")
-            .attr("transform", "rotate(-45)")
-            .attr("dy", "1.2em")
-            .attr("dx", "0.6em")
-        
-        // y axis
-        chart.append('g')
-            .call(d3.axisLeft(y))
-            .classed('y_axis', true);
-
-        chart.select('.y_axis')
-              .selectAll('text')
-              .attr("font-size", "1.25rem")
-              .attr("color", "var(--highlight-color)")
-
-        
-        // Drawing Chart
-        const layers = chart.selectAll('.layer')
+      
+      // drawing layers
+      const layers = chart.selectAll('.layer')
                         .data(stacked_data)
                         .enter()
                         .append('g')
@@ -105,59 +106,64 @@
                           .classed("bar", true)
                           .on("mouseover", onMouseOver)
                           .on("mouseout", onMouseOut);
-        
-        const legend_width_control_var = 10;
-        const legend_width_rect_text_interval = 20;
-        const legend_height_control_var = 20;
-        const legend_height_rect_text_interval = 15;
-        const legend_height_positive_negative_interval = 25;
-        
-        const legend_positive_box = chart.append('rect')
-                                      .attr("width", "1rem")
-                                      .attr("height", "1rem")
-                                      .attr("x", width + legend_width_control_var)
-                                      .attr("y", height/2 - legend_height_control_var)
-                                      .style("fill", "var(--negative-color)")
-                                      
-        const legend_positive_text = chart.append('text')
-                                          .text("부정 기사")
-                                          .attr("x", width + legend_width_control_var + legend_width_rect_text_interval)
-                                          .attr("y", height/2 - legend_height_control_var + legend_height_rect_text_interval)
-                                          .attr("font-weight", "500")
-                                          .style("fill", "var(--negative-color)")
+      
+      // legend
+      let legend = d3.select(".svg-content")
+                      .append("g")
+                      .attr("transform", `translate(${width/2 - 10},${height + 130})`)
+                      .classed("legend", true)
 
-        const legend_negative_box = chart.append('rect')
-                                        .attr("width", "1rem")
-                                        .attr("height", "1rem")
-                                        .attr("x", width + legend_width_control_var)
-                                        .attr("y", height/2 - legend_height_control_var + legend_height_positive_negative_interval)
+      const legend_width_control_var = 5;
+      const legend_width_rect_text_interval = 35;
+      const legend_height_control_var = -15;
+      const legend_height_rect_text_interval = 4;
+      const legend_height_positive_negative_interval = 29;
+      
+      const legend_positive_box = legend.append('rect')
+                                    .attr("width", "1.3rem")
+                                    .attr("height", "1.3rem")
+                                    .attr("x", legend_width_control_var)
+                                    .attr("y", legend_height_control_var)
+                                    .style("fill", "var(--negative-color)")
+                                    
+      const legend_positive_text = legend.append('text')
+                                        .text("부정 기사")
+                                        .attr("x", legend_width_rect_text_interval)
+                                        .attr("y", legend_height_rect_text_interval)
+                                        .attr("font-weight", "600")
+                                        .attr("font-size", "1.3rem")
+                                        .style("fill", "var(--negative-color)")
+
+      const legend_negative_box = legend.append('rect')
+                                      .attr("width", "1.3rem")
+                                      .attr("height", "1.3rem")
+                                      .attr("x", legend_width_control_var)
+                                      .attr("y", legend_height_control_var + legend_height_positive_negative_interval)
+                                      .style("fill", "var(--positive-color)")
+                                    
+      const legend_negative_text = legend.append('text')
+                                        .text("긍정 기사")
+                                        .attr("x", legend_width_rect_text_interval)
+                                        .attr("y", legend_height_rect_text_interval + legend_height_positive_negative_interval)
+                                        .attr("font-weight", "600")
+                                        .attr("font-size", "1.3rem")
                                         .style("fill", "var(--positive-color)")
-                                      
-        const legend_negative_text = chart.append('text')
-                                          .text("긍정 기사")
-                                          .attr("x", width + legend_width_control_var + legend_width_rect_text_interval)
-                                          .attr("y", height/2 - legend_height_control_var + legend_height_rect_text_interval + legend_height_positive_negative_interval)
-                                          .attr("font-weight", "500")
-                                          .style("fill", "var(--positive-color)")
-
-        function onMouseOver(event, d){
+      
+      function onMouseOver(event, d){
           const self = event.target;
           let color = "";
-          let popup_box_manual_x = 60;
-          let popup_box_manual_x_for_last = popup_box_manual_x * 2.25;
+          let popup_box_manual_x = 50;
+          let popup_box_manual_x_for_last = popup_box_manual_x * 3;
           d3.select(self)
             .style("fill", ()=>{
               color = (d[0] == 0 ? "#4F641A" : "#691A16");
               return color;
             })
 
-          const text = chart.append('g')
-                            .attr("id", "popup_box")
-                            
-          const rects_one = document.querySelector("#chart > svg > g > g:nth-child(3)")?.children;
-          const rects_two = document.querySelector("#chart > svg > g > g:nth-child(4)")?.children;
-        
-          
+          const text = d3.select(".chart")
+                        .append("g")
+                        .attr("id", "popup_box")
+         
           text.append("rect")
               .attr("x",() => x(d3.select(self).datum().data.date) - x.bandwidth()/2+popup_box_manual_x)
               .attr("y",() => y(d3.select(self).datum()[1]) + (y(d3.select(self).datum()[0]) - y(d3.select(self).datum()[1]))/3)
@@ -172,41 +178,45 @@
               .style('fill', "white")
 
             
-            text.append("text")
-                .attr("x",() => x(d3.select(self).datum().data.date) - x.bandwidth()/2+20+popup_box_manual_x)
-                .attr("y",() => y(d3.select(self).datum()[1]) + (y(d3.select(self).datum()[0]) - y(d3.select(self).datum()[1]))/3+50)
-                .attr("id", "popup_box")
-                .text("긍정 기사 : ")
-                .attr("font-weight", "500")
-                .style("fill", "#98C039")
-                .classed("popup_positive_text", true)
-                .append("tspan")
-                .text(`${d3.select(self).datum().data.positive_data}`)
-                .attr("font-weight", "700")
-                .attr("color", "#98C039")
-                .append("tspan")
-                .text("건")
-                .attr("font-weight", "500")
-                .attr("color", "#98C039")
+          text.append("text")
+              .attr("x",() => x(d3.select(self).datum().data.date) - x.bandwidth()/2+20+popup_box_manual_x)
+              .attr("y",() => y(d3.select(self).datum()[1]) + (y(d3.select(self).datum()[0]) - y(d3.select(self).datum()[1]))/3+50)
+              .attr("id", "popup_box")
+              .text("긍정 기사 : ")
+              .attr("font-weight", "500")
+              .style("fill", "#98C039")
+              .classed("popup_positive_text", true)
+              .append("tspan")
+              .text(`${d3.select(self).datum().data.positive_data}`)
+              .attr("font-weight", "700")
+              .attr("color", "#98C039")
+              .append("tspan")
+              .text("건")
+              .attr("font-weight", "500")
+              .attr("color", "#98C039")
                 
-                text.append("text")
-                .attr("x",() => x(d3.select(self).datum().data.date) - x.bandwidth()/2+20+popup_box_manual_x)
-                .attr("y",() => y(d3.select(self).datum()[1]) + (y(d3.select(self).datum()[0]) - y(d3.select(self).datum()[1]))/3+25)
-                .attr("id", "popup_box")
-                .classed("popup_negative_text", true)
-                .text("부정 기사 : ")
-                .attr("font-weight", "500")
-                .style("fill", "#D43C36")
-                .append("tspan")
-                .text(`${d3.select(self).datum().data.negative_data}`)
-                .attr("font-weight", "700")
-                .append("tspan")
-                .text("건")
-                .attr("font-weight", "500")
-
-                for (let index = 0; index < rects_one.length; index++) {
+          text.append("text")
+              .attr("x",() => x(d3.select(self).datum().data.date) - x.bandwidth()/2+20+popup_box_manual_x)
+              .attr("y",() => y(d3.select(self).datum()[1]) + (y(d3.select(self).datum()[0]) - y(d3.select(self).datum()[1]))/3+25)
+              .attr("id", "popup_box")
+              .classed("popup_negative_text", true)
+              .text("부정 기사 : ")
+              .attr("font-weight", "500")
+              .style("fill", "#D43C36")
+              .append("tspan")
+              .text(`${d3.select(self).datum().data.negative_data}`)
+              .attr("font-weight", "700")
+              .append("tspan")
+              .text("건")
+              .attr("font-weight", "500")
+            
+          const rects_one = document.querySelector("#chart > div > svg > g > g:nth-child(3)")?.children;
+          const rects_two = document.querySelector("#chart > div > svg > g > g:nth-child(4)")?.children;
+          
+          // for (let rect = 0; rect < rects_cnt)
+          for (let index = 0; index < rects_one.length; index++) {
                   const element = rects_one[index];
-                  if ((rects_one.length - (index)) <= 3 && element === self) {
+                  if ((rects_one.length - (index)) <= 6 && element === self) {
                     d3.selectAll('.popup_rect')
                       .attr("x", `${self.getAttribute("x") - popup_box_manual_x_for_last - 20}`);
                     d3.selectAll('.popup_positive_text')
@@ -217,9 +227,9 @@
                   
                 }
 
-                for (let index = 0; index < rects_two.length; index++) {
+          for (let index = 0; index < rects_two.length; index++) {
                   const element = rects_two[index];
-                  if ((rects_two.length - (index)) <= 3 && element === self) {
+                  if ((rects_two.length - (index)) <= 6 && element === self) {
                     d3.selectAll('.popup_rect')
                       .attr("x", `${self.getAttribute("x") - popup_box_manual_x_for_last - 20}`);
                     d3.selectAll('.popup_positive_text')
@@ -229,6 +239,7 @@
                   } 
                   
                 }
+            
 
         }
 
@@ -236,52 +247,28 @@
           const self = event.target;
           d3.select(self)
             .style("fill", ()=>{
-              return d[1] != 100 ? "#98C039" : "#D43C36";
+              return d[0] == 0 ? "#98C039" : "#D43C36";
               
             });
           
             d3.selectAll('#popup_box')
               .remove();
         }
-
-      }
-
-
-    afterUpdate(()=>{   
-
-      const chartDiv = document.querySelector('#chart');
-      svg_width = chartDiv?.parentElement?.clientWidth??svg_width;
-      svg_height = chartDiv?.parentElement?.clientHeight??svg_height;
       
-      chartDiv?.firstElementChild?.setAttribute("width", svg_width.toString());
-		  chartDiv?.firstElementChild?.setAttribute("height", svg_height.toString());
-
-      d3.select('svg')
-        .remove()
-
-      createChart();
-
-
-
-      
-  });
+    })
 
     
 
-
-    onMount(() => {
-      d3.select("#chart")
-        .append('svg')
-        .attr("width", svg_width)
-        .attr("height", svg_height)
-    });
 </script>
   
   <!-- 차트를 표시할 요소 -->
-  <div id="chart">
-  </div>
+  <div id="chart"></div>
 
   <style>
+    .container{
+      /* width:37.5rem;
+      height:25rem; */
+    }
   </style>
 
 
