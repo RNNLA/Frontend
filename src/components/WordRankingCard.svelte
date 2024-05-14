@@ -40,7 +40,7 @@
             const padding = window.getComputedStyle(tableContents.rows[1].children[0]).getPropertyValue("padding")
             
             scrollSize = rowCount * (rowHeight - parseInt(padding.replaceAll("px", ""))/2);
-            console.log(scrollSize);
+            // scrollSize = rowCount * rowHeight;
             document.querySelector(".flex-container")?.setAttribute("style", `height: ${scrollSize.toString()}px`);
         });
 

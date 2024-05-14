@@ -13,15 +13,16 @@
     export let marginRight:Number = 0;
     export let enableExpand:Boolean = false;
     export let enableFilterBox:Boolean = false;
+    export let dataSelector:Number = 0;
 
-    let isClickedArray = [true, false, false]
-    
+    let isClickedArray = [true, false, false];
 
     function doSomething(index:Number)
     {
         isClickedArray = isClickedArray.map((value, i) => {return (i==index)});
-        console.log(isClickedArray);
+        dataSelector = index;
     }
+
 </script>
 
 
@@ -43,9 +44,9 @@
                 {#if enableFilterBox}
                     <div id="vs-filterbox">
                         <ItemDirection direction="row">
-                            <button class=" {isClickedArray[0] ? "clicked1" : "filter"}" type="button" on:click={() => doSomething(0)}>전체</button>
-                            <button class="{isClickedArray[1] ? "clicked1" : "filter"}" type="button" on:click={() => doSomething(1)}>긍정</button>
-                            <button class="{isClickedArray[2] ? "clicked1" : "filter"}" type="button" on:click={() => doSomething(2)}>부정</button>
+                            <button class="filter {isClickedArray[0] ? "clicked-filter" : ""}" type="button" on:click={() => doSomething(0)}>전체</button>
+                            <button class="filter {isClickedArray[1] ? "clicked-filter" : ""}" type="button" on:click={() => doSomething(1)}>긍정</button>
+                            <button class="filter {isClickedArray[2] ? "clicked-filter" : ""}" type="button" on:click={() => doSomething(2)}>부정</button>
                         </ItemDirection>
                     </div>
                 {/if}
@@ -56,9 +57,9 @@
                 {#if enableFilterBox}
                     <div id="vs-filterbox">
                         <ItemDirection direction="row">
-                            <button class="filter {isClickedArray[0] ? "clicked1" : ""}" type="button" on:click={() => doSomething(0)}>전체</button>
-                            <button class="filter {isClickedArray[1] ? "clicked1" : ""}" type="button" on:click={() => doSomething(1)}>긍정</button>
-                            <button class="filter {isClickedArray[2] ? "clicked1" : ""}" type="button" on:click={() => doSomething(2)}>부정</button>
+                            <button class="filter {isClickedArray[0] ? "clicked-filter" : ""}" type="button" on:click={() => doSomething(0)}>전체</button>
+                            <button class="filter {isClickedArray[1] ? "clicked-filter" : ""}" type="button" on:click={() => doSomething(1)}>긍정</button>
+                            <button class="filter {isClickedArray[2] ? "clicked-filter" : ""}" type="button" on:click={() => doSomething(2)}>부정</button>
                         </ItemDirection>
                     </div>
                 {/if}
@@ -95,11 +96,11 @@
 
     #vs-filterbox {
 		height: 2.4rem;
-		width: 12rem;
+		width: 12.75rem;
         display: flex;
         justify-content: space-between;
         align-items: center;
-		border-radius: 28px;
+		border-radius: 14px;
         margin-top: -0.5rem;
         margin-left: 5%;
         transform:translate(0, 25%);
@@ -110,30 +111,42 @@
         width: 4rem;
 		text-align: center;
 		font-size: 1rem;
-		font-weight: regular;
-		color: rgb(0,0,0);
-        border-radius: 28px;
+		font-weight: bold;
+		color: var(--color-text-opa);
+        border-radius: 14px;
+        margin: 0 0.125rem 0 0.125rem;
         background-color: var(--color-bg);
 	}
 
     .filter:hover {
         height: 2.4rem;
-        background-color: rgb(255,255,255);
-        border: 2px solid black;
+        color: var(--color-text);
         font-weight: bold;
+        background-color: var(--color-bg-opa);
+        /* https://smoothshadows.com/#djEsMiwxLDEsNSw1LDAsIzAzMDcxMiwjZmZmZmZmLCNmZmZmZmYsMw%3D%3D */
+        box-shadow:
+            0px 0.9px 4.5px rgba(0, 0, 0, 0.017),
+            0px 2.4px 12.4px rgba(0, 0, 0, 0.025),
+            0px 5.7px 29.8px rgba(0, 0, 0, 0.033),
+            0px 19px 99px rgba(0, 0, 0, 0.05)
+            ;
     }
 
-    .clicked1 {
-        width: 4rem;
-		text-align: center;
-		font-size: 1rem;
-		/* font-weight: regular; */
-		color: rgb(0,0,0);
-        border-radius: 28px;
+    .clicked-filter {
         height: 2.4rem;
-        background-color: rgb(255,255,255);
+        color: var(--color-text);
         border: 2px solid black;
         font-weight: bold;
+        background-color: rgb(255,255,255);
+        /* https://smoothshadows.com/#djEsMiwxLDEsNSw1LDAsIzAzMDcxMiwjZmZmZmZmLCNmZmZmZmYsMw%3D%3D */
+        box-shadow:
+            0px 0.9px 4.5px rgba(0, 0, 0, 0.017),
+            0px 2.4px 12.4px rgba(0, 0, 0, 0.025),
+            0px 5.7px 29.8px rgba(0, 0, 0, 0.033),
+            0px 19px 99px rgba(0, 0, 0, 0.05)
+            ;
     }
+
+    
 
 </style>
