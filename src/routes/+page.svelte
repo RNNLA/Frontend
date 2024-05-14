@@ -82,7 +82,7 @@
 		</ReusableBox>	
 	</ItemDirection>
 	
-	<ReusableBox title='금일 <span class="highlight-color">반도체 시황</span> 뉴스들도 확인해보세요!' marginTop={20} marginBottom={28} titleIcon={NewsPin}>
+	<ReusableBox title='금일 <span class="highlight-color">반도체 시황</span> 뉴스들도 확인해보세요!' marginTop={20} marginBottom={28} titleIcon={NewsPin} enableFilterBox={true}>
 		<div id="vs-newscards">
 			<VirtualScroll
 					bind:this={list}
@@ -90,7 +90,7 @@
 					key="id"
 					let:data
 			>
-			<NewsCard newsTitle={data.title} newsLink={data.link}></NewsCard>
+				<NewsCard newsTitle={data.title} newsLink={data.link}></NewsCard>
 			</VirtualScroll>
 		</div>
 	</ReusableBox>
@@ -101,7 +101,7 @@
 	.container {
 		padding: 3rem 4rem 6rem 4rem;
 	}
-	#vs {
-		height: 30rem;
-	}
+
+	
+
 </style>
