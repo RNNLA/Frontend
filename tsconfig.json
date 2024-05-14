@@ -15,7 +15,7 @@
 		"src/**/*.d.ts",
 		"src/**/*.js",
 		"src/**/*.svelte",
-		"src/routes/verification/models.ㅓㄴ"
+		"src/routes/verification/models.js"
 	]
 	// Path aliases are handled by https://kit.svelte.dev/docs/configuration#alias
 	//
