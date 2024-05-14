@@ -265,10 +265,6 @@
   <div id="chart"></div>
 
   <style>
-    .container{
-      /* width:37.5rem;
-      height:25rem; */
-    }
   </style>
 
 
