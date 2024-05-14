@@ -36,7 +36,9 @@
 :root {
 	--font-body: 'SpoqaHanSansNeo';
 	--color-bg: #F1F2F4;
+	--color-bg-opa: rgb(241, 242, 244, 0.2);
 	--color-text: #33363F;
+	--color-text-opa: rgba(51, 54, 63, 0.6);
 	--highlight-color: #5447E5;
 	--positive-color: rgb(152, 192, 57);
 	--negative-color: rgb(212, 60, 54);
@@ -121,7 +123,7 @@ button:active {
 
 button:focus:not(:focus-visible) {
 	outline: none;
-	border: none;
+	/* border: none; */
 }
 
 @media (min-width: 720px) {
