@@ -4,6 +4,7 @@
     export let count: Number = 0;
 
     import {onMount, afterUpdate} from 'svelte';
+    import {wordCloudDataModels} from '../store';
 
     interface RankPartModel {
         rank: Number;
@@ -11,38 +12,28 @@
         count: Number;
         sentiment: String;
     }
-    let rankPartModels:RankPartModel[] = JSON.parse(`
-        [
-            {"rank":1, "word":"반도체", "count":4010, "is_not_risk":false},
-            {"rank":2, "word":"중국", "count":2466, "is_not_risk":true},
-            {"rank":3, "word":"삼성전자", "count":1882, "is_not_risk":false},
-            {"rank":4, "word":"미국", "count":1828, "is_not_risk":true},
-            {"rank":5, "word":"HBM","count":1796, "is_not_risk":false},
-            {"rank":6, "word":"SK하이닉스", "count":1648, "is_not_risk":false},
-            {"rank":7, "word":"분기", "count":1519, "is_not_risk":false},
-            {"rank":8, "word":"AI", "count":1494, "is_not_risk":false},
-            {"rank":9, "word":"시장", "count":1361, "is_not_risk":false},
-            {"rank":10, "word":"제품", "count":1231, "is_not_risk":false}
-        ]`).map((obj: { rank: number; word: string; count: number; is_not_risk: boolean; }) => {
+
+
+    let rankPartModels:RankPartModel[] = JSON.parse(JSON.stringify($wordCloudDataModels)).map((obj: { rank: number; word: string; count: number; is_not_risk: boolean; }) => {
             return {
                 "rank" : obj.rank,
                 "word" : obj.word,
                 "count" : obj.count,
                 "sentiment" : obj.is_not_risk ? "긍정" : "부정"
             }
-        });
+        }).slice(0, 10);
 
-        afterUpdate( async () => {
-            let scrollSize: number = 30;
-            let tableContents = document.getElementById('word-ranking-table');
-            const rowCount = 6;
-            const rowHeight = tableContents.rows[1].children[0].scrollHeight;
-            const padding = window.getComputedStyle(tableContents.rows[1].children[0]).getPropertyValue("padding")
-            
-            scrollSize = rowCount * (rowHeight - parseInt(padding.replaceAll("px", ""))/2);
-            // scrollSize = rowCount * rowHeight;
-            document.querySelector(".flex-container")?.setAttribute("style", `height: ${scrollSize.toString()}px`);
-        });
+    afterUpdate( async () => {
+        let scrollSize: number = 30;
+        let tableContents = document.getElementById('word-ranking-table');
+        const rowCount = 6;
+        const rowHeight = tableContents.rows[1].children[0].scrollHeight;
+        const padding = window.getComputedStyle(tableContents.rows[1].children[0]).getPropertyValue("padding")
+        
+        scrollSize = rowCount * (rowHeight - parseInt(padding.replaceAll("px", ""))/2);
+        // scrollSize = rowCount * rowHeight;
+        document.querySelector(".flex-container")?.setAttribute("style", `height: ${scrollSize.toString()}px`);
+    });
 
 </script>
 <div class="flex-container">

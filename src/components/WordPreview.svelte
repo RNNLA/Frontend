@@ -2,6 +2,7 @@
     import * as d3 from 'd3';
     import cloud from 'd3-cloud';
     import { onMount, afterUpdate} from 'svelte';
+    import { wordCloudDataModels } from '../store';
 
     const svg_width:number = 600;
     const svg_height:number = 350;
@@ -10,29 +11,6 @@
     let width:number = svg_width - margin.left - margin.right;
     let height:number = svg_height - margin.top - margin.bottom;
 
-
-    const myWords = [
-        { word: "Word0", size: 300, is_not_risk: true },
-        { word: "Word1", size: 100, is_not_risk: true },
-        { word: "Word2", size: 200, is_not_risk: false },
-        { word: "Word3", size: 100, is_not_risk: true },
-        { word: "Word4", size: 500, is_not_risk: true },
-        { word: "Word5", size: 110, is_not_risk: false },
-        { word: "Word6", size: 68, is_not_risk: true },
-        { word: "Word7", size: 40, is_not_risk: true },
-        { word: "Word8", size: 30, is_not_risk: false },
-        { word: "Word9", size: 10, is_not_risk: true },
-        { word: "Word10", size: 1, is_not_risk: false },
-        { word: "Word11", size: 2, is_not_risk: true },
-        { word: "Word12", size: 3, is_not_risk: true },
-        { word: "Word13", size: 4, is_not_risk: true },
-        { word: "Word14", size: 5, is_not_risk: false },
-        { word: "Word15", size: 6, is_not_risk: true },
-        { word: "Word16", size: 7, is_not_risk: true },
-    ];
-
-    let wordSorted = myWords.sort((a, b) => b.size - a.size);
-    wordSorted = wordSorted.slice(0, 5);
 
     afterUpdate(async()=>{
         // set the dimensions and margins of the graph
@@ -45,6 +23,17 @@
     });
 
     onMount(()=>{
+        const myWords = JSON.parse(JSON.stringify($wordCloudDataModels)).map((obj: { rank: number; word: string; count: number; is_not_risk: boolean; }) => {
+            return {
+                "rank" : obj.rank,
+                "word" : obj.word,
+                "size" : obj.count,
+                "is_not_risk" : obj.is_not_risk
+            }
+        });
+
+        let wordSorted = myWords.sort((a, b) => b.size - a.size);
+        wordSorted = wordSorted.slice(0, 5);
         // append the svg object to the body of the page
         var svg = d3.select("#cloud")
                     .append("div")
