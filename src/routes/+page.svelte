@@ -141,9 +141,9 @@
 				>
 				<Spacer height={2}></Spacer>
 				<ItemDirection direction="row" enableCenter={true}>
-					<TodayBinarySentimentCard isPositive={true} percent={Math.round((countPositive / countAll) * 100)} count={countPositive}></TodayBinarySentimentCard>
+					<TodayBinarySentimentCard isPositive={true} percent={Math.round((countPositive / countAll) * 100)} count={countPositive} countAll={countAll}></TodayBinarySentimentCard>
 					<Spacer width={4}></Spacer>
-					<TodayBinarySentimentCard isPositive={false} percent={Math.round(((countAll - countPositive) / countAll) * 100)} count={countAll - countPositive}></TodayBinarySentimentCard>
+					<TodayBinarySentimentCard isPositive={false} percent={Math.round(((countAll - countPositive) / countAll) * 100)} count={countAll - countPositive} countAll={countAll}></TodayBinarySentimentCard>
 				</ItemDirection>
 			</ReusableBox>
 
