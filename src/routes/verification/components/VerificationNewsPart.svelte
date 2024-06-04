@@ -3,7 +3,7 @@
     import CheckBox from '../../../components/CheckBox.svelte';
     import ItemDirection from '../../../components/ItemDirection.svelte';
     import Spacer from '../../../components/Spacer.svelte';
-    import {verificationNewsDataModels} from '../../../store';
+    import {verificationNewsDataModels, data_format} from '../../../store';
     import verifiedImg from "$lib/images/verified-icon.png";
     let verificationViewIndex = 0;
     let verificationViewTitleFlyY = 0;
@@ -32,9 +32,37 @@
                 $verificationNewsDataModels[verificationViewIndex].is_checked = true;
             }
         }
+        fetchData();
     }
+    async function fetchData() {
+            await fetch("http://localhost:10095", {
+                method: 'PUT',
+                headers: {
+                'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(
+                    {
+                        "data": $verificationNewsDataModels
+                    }
+                )
+            })
+            .then(response => {
+                if (!response.ok) {
+                throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log('JSON 파일이 업데이트되었습니다.');
+            })
+            .catch(error => {
+                console.error('에러 발생:', error);
+            });
+        }   
+        
+
 	function onKeyDown(e:any) {
-        console.log(e.keyCode);
+        
         switch(e.keyCode) {
             case 49:
                 updateVerification("isSemi");
@@ -51,12 +79,15 @@
             case 38:
                 if (verificationViewIndex > 0) verificationViewIndex -= 1;
                 verificationViewTitleFlyY = -40;
+                
                 break;
             case 40:
-            if (verificationViewIndex < $verificationNewsDataModels.length -1) verificationViewIndex += 1;
-            verificationViewTitleFlyY = 40;
+                if (verificationViewIndex < $verificationNewsDataModels.length -1) verificationViewIndex += 1;
+                verificationViewTitleFlyY = 40;
+           
                 break;
         }
+        
 	}
     function handleCheck(event: CustomEvent) {
         const buttonKey = event.detail.buttonKey;
@@ -82,6 +113,7 @@
                 $verificationNewsDataModels[verificationViewIndex].is_checked = true;
             }
         }
+        fetchData();
     }
     function restoreVerificationPosition() {
         for (let index = 0; index < $verificationNewsDataModels.length; index++) {
@@ -126,9 +158,9 @@
     ">
             <ItemDirection direction="row">
                 <div class="label-box highlight" in:fade={{duration:fadeDuration}} out:fade={{duration:fadeDuration}}>
-                    예측:{$verificationNewsDataModels[verificationViewIndex].is_semicon ? '반도체 시황' : '일반 기사'}
+                    예측:{$verificationNewsDataModels[verificationViewIndex].is_not_semicon ? '일반 기사' : '반도체 시황'}
                 </div>
-                {#if $verificationNewsDataModels[verificationViewIndex].is_semicon}
+                {#if !$verificationNewsDataModels[verificationViewIndex].is_not_semicon}
                     <Spacer width={1}></Spacer>
                     <div class="
                         label-box
