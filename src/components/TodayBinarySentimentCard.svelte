@@ -57,7 +57,7 @@
     }
 
     .bigger-text {
-        font-size: 2rem;
+        font-size: 2.125rem;
     }
     .smaller-text {
         font-size: 1.5rem;

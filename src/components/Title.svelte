@@ -3,8 +3,8 @@
 
     export let isPositive:boolean;
     export let newsLargeTitles: string[];
-
     let currentWord = newsLargeTitles[0]??"";
+
     let i = 0;
     $: {
         setTimeout(() => {

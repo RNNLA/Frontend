@@ -9,7 +9,7 @@
     let svg_height:number = 350;
 
     const legend_height:number = 70;
-    const margin = { top: 10, right: 50, bottom: 75+legend_height, left: 60 };
+    const margin = { top: 10, right: 50, bottom: 40+legend_height, left: 60 };
 
     let width:number = svg_width - margin.left - margin.right;
     let height:number = svg_height - margin.top - margin.bottom;
@@ -19,7 +19,14 @@
       
 
     function create_chart () {
-      let data = JSON.parse(JSON.stringify($graphDataModels));
+      let data = JSON.parse(JSON.stringify($graphDataModels)).map((obj: { timestamp:string; negative_count:number;  positive_count:number;}) => {
+            return {
+                "timestamp" : obj.timestamp.slice(2),
+                "negative_count" : obj.negative_count,
+                "positive_count" : obj.positive_count
+            }
+        })
+      data = data.slice(data.length-20, data.length);
 
       let keys = ['positive_count', 'negative_count'];
       let stacked_data = d3.stack().keys(keys)(data);
@@ -30,7 +37,7 @@
               .append("div")
               .classed("container", true)
               .append("svg")
-              .attr("viewBox", `0 0 700 380`)
+              .attr("viewBox", `0 0 700 420`)
               .attr("preserveAspectRatio", "xMinYMin meet")
               .classed("svg-content",true)
 
@@ -195,7 +202,7 @@
             // for (let rect = 0; rect < rects_cnt)
             for (let index = 0; index < rects_one.length; index++) {
                     const element = rects_one[index];
-                    if ((rects_one.length - (index)) <= 6 && element === self) {
+                    if (rects_one.length >= 4 &&(rects_one.length - (index)) <= 6 && element === self) {
                       d3.selectAll('.popup_rect')
                         .attr("x", `${self.getAttribute("x") - popup_box_manual_x_for_last - 20}`);
                       d3.selectAll('.popup_positive_text')
@@ -208,7 +215,7 @@
 
             for (let index = 0; index < rects_two.length; index++) {
                     const element = rects_two[index];
-                    if ((rects_two.length - (index)) <= 6 && element === self) {
+                    if (rects_two.length >= 4 &&(rects_two.length - (index)) <= 6 && element === self) {
                       d3.selectAll('.popup_rect')
                         .attr("x", `${self.getAttribute("x") - popup_box_manual_x_for_last - 20}`);
                       d3.selectAll('.popup_positive_text')

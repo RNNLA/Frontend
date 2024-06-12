@@ -47,6 +47,8 @@
                             <button class="filter {isClickedArray[0] ? "clicked-filter" : ""}" type="button" on:click={() => doSomething(0)}>전체</button>
                             <button class="filter {isClickedArray[1] ? "clicked-filter" : ""}" type="button" on:click={() => doSomething(1)}>긍정</button>
                             <button class="filter {isClickedArray[2] ? "clicked-filter" : ""}" type="button" on:click={() => doSomething(2)}>부정</button>
+
+                            <button class="sort" type="button">최신순</button>
                         </ItemDirection>
                     </div>
                 {/if}
@@ -60,6 +62,8 @@
                             <button class="filter {isClickedArray[0] ? "clicked-filter" : ""}" type="button" on:click={() => doSomething(0)}>전체</button>
                             <button class="filter {isClickedArray[1] ? "clicked-filter" : ""}" type="button" on:click={() => doSomething(1)}>긍정</button>
                             <button class="filter {isClickedArray[2] ? "clicked-filter" : ""}" type="button" on:click={() => doSomething(2)}>부정</button>
+
+                            <button class="sort" type="button">최신순</button>
                         </ItemDirection>
                     </div>
                 {/if}
@@ -145,6 +149,16 @@
             0px 5.7px 29.8px rgba(0, 0, 0, 0.033),
             0px 19px 99px rgba(0, 0, 0, 0.05)
             ;
+    }
+
+    .sort {
+        width: 5rem;
+		text-align: center;
+		font-size: 1rem;
+		font-weight: bold;
+		color: var(--color-text-opa);
+        border-radius: 14px;
+        margin-left : 4rem;
     }
 
     

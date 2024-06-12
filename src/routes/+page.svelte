@@ -12,7 +12,7 @@
 	import NewsPin from "$lib/images/news-pin.png";
 	import VirtualScroll from "svelte-virtual-scroll-list"
 
-	import {verificationNewsDataModels, graphDataModels, wordCloudDataModels, data_format} from "../store";
+	import {analysisNewsDataModels, graphDataModels, wordCloudDataModels, data_format, newsCardHeight} from "../store";
 
 
 	
@@ -37,10 +37,10 @@
 	let newsLargeTitles: string[] = [];
 
 	onMount(async () => {
-		await fetch("./data/" + data_format('VerificationNewsData', '2023-06-26'))
+		await fetch("./data/" + data_format('VerificationNewsData'))
 		.then(response => response.json())
 		.then(data => {
-			verificationNewsDataModels.update(
+			analysisNewsDataModels.update(
 				models => 
 				{models = data;
 				return models;})
@@ -51,7 +51,7 @@
 		})
 		.catch(error => console.error('Error fetching JSON:', error));
 
-		await fetch("./data/" + data_format('WordCloudData', '2023-06-26'))
+		await fetch("./data/" + data_format('WordCloudData'))
 		.then(response => response.json())
 		.then(data => {
 			wordCloudDataModels.update(
@@ -61,7 +61,7 @@
 		})
 		.catch(error => console.error('Error fetching JSON:', error));
 
-		await fetch("./data/" + data_format('GraphData', '2023-06-26'))
+		await fetch("./data/" + data_format('GraphData'))
 		.then(response => response.json())
 		.then(data => {
 			graphDataModels.update(
@@ -72,6 +72,10 @@
 		.catch(error => console.error('Error fetching JSON:', error));
 
 		calculateTodayBinarySentiment(newsDataModels);	
+		for(let i=0; i<=newsDataModels.length; i++){
+			if(newsDataModels[i].title !== undefined)
+				newsLargeTitles.push(newsDataModels[i].title);
+		}
 		
 	});
 	
@@ -107,18 +111,28 @@
 
 	afterUpdate( async () => {
 		await tick();
-		let scrollSize: number = 30;
-		let newsCardItems = document.querySelectorAll("#vs-newscards > div > div.virtual-scroll-wrapper > div.virtual-scroll-item");
-		const margin = window.getComputedStyle(newsCardItems[0].children[0].children[0]).getPropertyValue("margin-bottom");
-		const elemLength = newsCardItems.length >= 5 ? 5 : newsCardItems.length;
-		const elemHeight = newsCardItems[0].scrollHeight;
-		scrollSize = elemLength * (elemHeight+parseInt(margin.replaceAll("px", "")));
+		let scrollSize: number = 265;
+		// if($newsCardHeight < 0){
+		// 	let newsCardItems = document.querySelectorAll("#vs-newscards > div > div.virtual-scroll-wrapper > div.virtual-scroll-item");
+		// 	const margin = window.getComputedStyle(newsCardItems[0].children[0].children[0]).getPropertyValue("margin-bottom");
+		// 	const elemLength = newsCardItems.length >= 5 ? 5 : newsCardItems.length;
+		// 	const elemHeight = newsCardItems[0].scrollHeight;
+		// 	scrollSize = elemLength * (elemHeight+parseInt(margin.replaceAll("px", "")));
+		// 	console.log(scrollSize);
+		// 	newsCardHeight.set(elemHeight);
+		// }
+		// else {
+		// 	let newsCardItems = document.querySelectorAll("#vs-newscards > div > div.virtual-scroll-wrapper > div.virtual-scroll-item");
+		// 	const margin = window.getComputedStyle(newsCardItems[0].children[0].children[0]).getPropertyValue("margin-bottom");
+		// 	const elemLength = newsCardItems.length >= 5 ? 5 : newsCardItems.length;
+		// 	const elemHeight = $newsCardHeight;
+		// 	scrollSize = elemLength * (elemHeight+parseInt(margin.replaceAll("px", "")));
+		// }
+		
 
 		document.querySelector("#vs-newscards")?.setAttribute("style", `height: ${scrollSize.toString()}px`);
-
-		for(let i=0; i<=$verificationNewsDataModels.length; i++){
-			newsLargeTitles.push($verificationNewsDataModels[i].title);
-		}
+		
+		
 	})
 
 	
@@ -128,7 +142,7 @@
 	<title>RNNLA DASHBOARD</title>
 	<meta name="description" content="RNNLA Dashboard App" />
 </svelte:head>
-{#if $graphDataModels.length != 0 && $wordCloudDataModels.length != 0 && $verificationNewsDataModels.length != 0}
+{#if newsLargeTitles.length != 0 && $graphDataModels.length != 0 && $wordCloudDataModels.length != 0 && $analysisNewsDataModels.length != 0}
 <div class="container">
 <ItemDirection>
 	<Title isPositive={(countPositive > countAll - countPositive)} newsLargeTitles={newsLargeTitles}></Title>

@@ -22,7 +22,7 @@
 	</div>
 	<div class="menu">
 		<ItemDirection direction="column" enableCenter={true}>
-			<a href="/" aria-current={$page.url.pathname === '/' ? 'page' : undefined} data-sveltekit-reload>분석</a>
+			<a href="/" aria-current={$page.url.pathname === '/' ? 'page' : undefined} >분석</a>
 			{#if $page.url.pathname === '/'}
 				<div class="menu_cur" in:fade></div>
 			{/if}

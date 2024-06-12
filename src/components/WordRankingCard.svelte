@@ -24,14 +24,14 @@
         }).slice(0, 10);
 
     afterUpdate( async () => {
-        let scrollSize: number = 30;
-        let tableContents = document.getElementById('word-ranking-table');
-        const rowCount = 6;
-        const rowHeight = tableContents.rows[1].children[0].scrollHeight;
-        const padding = window.getComputedStyle(tableContents.rows[1].children[0]).getPropertyValue("padding")
+        let scrollSize: number = 267;
+        // let tableContents = document.querySelectorAll('#word-ranking-table > tbody > tr > td');
+        // const rowCount = 6;
+        // const rowHeight = tableContents[0].clientHeight;
+        // const padding = window.getComputedStyle(tableContents[0]).getPropertyValue("padding");
         
-        scrollSize = rowCount * (rowHeight - parseInt(padding.replaceAll("px", ""))/2);
-        // scrollSize = rowCount * rowHeight;
+        
+        // scrollSize = rowCount * (rowHeight - parseInt(padding.replaceAll("px", ""))/2);
         document.querySelector(".flex-container")?.setAttribute("style", `height: ${scrollSize.toString()}px`);
     });
 
